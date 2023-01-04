@@ -55,6 +55,12 @@ class ActivityController extends Controller
 		return view('activity.edit', compact('activity'));
 	}
 
+	public function editclone(Request $request, $activityId) {
+		$activity = Activity::findOrFail($activityId);
+
+		return view('activity.editclone', compact('activity'));
+	}
+
 	public function update(Request $request, $activityId) {
 
 		$activity = Activity::findOrFail($activityId);
@@ -85,5 +91,33 @@ class ActivityController extends Controller
 
 		return redirect()->route('activity.index')->with('status', 'New activity record updated');
 	}
+
+    public function clone(Request $request)
+    {
+        // Create a new model instance
+        $clonedRecord = new Activity();
+
+        // Set the attributes of the new model instance
+		$clonedRecord->task_code = $request->task_code;
+		$clonedRecord->activity_date = $request->activity_date;
+		$clonedRecord->team_code = $request->team_code;
+		$clonedRecord->activity_type = $request->activity_type;
+		$clonedRecord->contract_code = $request->contract_code;
+        // You can add additional logic here to allow the user to modify the values of the cloned record's fields before saving it
+
+        // Save the new model instance to the database
+        $clonedRecord->save();
+
+		
+		foreach ($request->outputs as $key => $value) {
+			$clonedRecord->outputs()->updateOrCreate([
+				'output_type' => $key,
+			], [
+				'output_value' => $value,
+			]);
+		}
+
+		return redirect()->route('activity.index')->with('status', 'New activity record updated');
+    }
 
 }

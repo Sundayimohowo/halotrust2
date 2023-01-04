@@ -22,3 +22,6 @@ Route::post('create', [ActivityController::class, 'store'])->name('activity.stor
 
 Route::get('{activity}/edit', [ActivityController::class, 'edit'])->name('activity.edit');
 Route::post('{activity}/edit', [ActivityController::class, 'update'])->name('activity.update');
+
+Route::get('{activity}/editclone', [ActivityController::class, 'editclone'])->name('activity.editclone');
+Route::post('clone', [ActivityController::class, 'clone'])->name('activity.clone');

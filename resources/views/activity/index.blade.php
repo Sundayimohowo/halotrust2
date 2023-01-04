@@ -64,6 +64,8 @@
 								</button>
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 									<a class="dropdown-item" href="{{ route('activity.edit', [$activity->activity_id]) }}">Edit</a>
+									<a class="dropdown-item" href="{{ route('activity.editclone', [$activity->activity_id]) }}">Clone</a>
+									
 								</div>
 							</div>
 						</td>
